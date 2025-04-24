@@ -133,7 +133,7 @@
       const share = document.getElementById("share").value;
       const data = { name, phone, profession, debt, investments, share };
 
-      fetch("YOUR_WEB_APP_URL", {
+      fetch("https://docs.google.com/spreadsheets/d/1FV-rRQ_ibewE3URiM3ag5GK_UHszWpv4TFk-17UKMBM/edit?usp=drive_link", {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
