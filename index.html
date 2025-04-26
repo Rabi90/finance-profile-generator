@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finance Profile Form</title>
   <style>
     body {
@@ -15,36 +16,38 @@
     .container {
       margin: 20px auto;
       padding: 20px;
-      max-width: 500px;
+      max-width: 450px;
       background: white;
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     }
 
     #logo {
-      width: 150px;
+      width: 140px;
       margin: 20px auto;
       display: block;
     }
 
-    form input, form textarea {
+    form input, form select, form textarea {
       width: 90%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px auto;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 6px;
       display: block;
+      font-size: 16px;
     }
 
     button {
-      padding: 10px 20px;
+      width: 90%;
+      padding: 12px;
       background: #4CAF50;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       margin-top: 10px;
+      font-size: 18px;
       cursor: pointer;
-      font-size: 16px;
     }
 
     button:hover {
@@ -71,12 +74,31 @@
       margin-top: -8px;
       margin-bottom: 10px;
     }
+
+    #spinner img {
+      width: 40px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        width: 95%;
+        padding: 15px;
+      }
+
+      form input, form select, form textarea, button {
+        font-size: 16px;
+      }
+
+      #logo {
+        width: 120px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <img id="logo" src="https://i.ibb.co/3yjjpkw/Smura.jpg" alt="Logo">
+  <img id="logo" src="https://i.ibb.co/3yjjpkwn/Smura.jpg" alt="Logo">
 
   <div class="container">
     <form id="submit-form">
@@ -84,16 +106,39 @@
       <input name="phone" id="phone" type="text" placeholder="Phone Number" required>
       <small id="phone-error">Please enter a valid 10-digit phone number.</small>
 
-      <textarea name="answer1" placeholder="What you do for a living? (Job/Business/Self-employed)" required></textarea>
-      <textarea name="answer2" placeholder="Do you have debt? (Small or Big)" required></textarea>
+      <!-- Changed to dropdown -->
+      <select name="answer1" required>
+        <option value="">What you do for a living?</option>
+        <option value="Job">Job</option>
+        <option value="Business">Business</option>
+        <option value="Self-employed">Self-employed</option>
+        <option value="Freelancer">Freelancer</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <!-- Changed to dropdown -->
+      <select name="answer2" required>
+        <option value="">Do you have debt?</option>
+        <option value="No debt">No debt</option>
+        <option value="Small debt">Small debt</option>
+        <option value="Big debt">Big debt</option>
+      </select>
+
+      <!-- Keep Textarea for investment preferences -->
       <textarea name="answer3" placeholder="Do you have or prefer investments? Which assets?" required></textarea>
-      <textarea name="answer4" placeholder="Would you be happy if we share this content with followers?" required></textarea>
+
+      <!-- Changed to dropdown -->
+      <select name="answer4" required>
+        <option value="">Would you be happy if we share this?</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
 
       <button type="submit">Submit</button>
     </form>
 
     <div id="spinner">
-      <img src="https://i.gifer.com/YCZH.gif" alt="Loading..." width="50">
+      <img src="https://i.gifer.com/YCZH.gif" alt="Loading...">
     </div>
 
     <div id="thankYouMessage">Thank you for your submission!</div>
