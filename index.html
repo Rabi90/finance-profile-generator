@@ -95,32 +95,25 @@
 
   <script>
     function submitForm() {
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const profession = document.getElementById("profession").value;
-      const debt = document.getElementById("debt").value;
-      const investments = document.getElementById("investments").value;
-      const share = document.getElementById("share").value;
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const profession = document.getElementById("profession").value;
+  const debt = document.getElementById("debt").value;
+  const investments = document.getElementById("investments").value;
+  const share = document.getElementById("share").value;
 
-      const data = { name, phone, profession, debt, investments, share };
+  const data = { name, phone, profession, debt, investments, share };
 
-      fetch("https://script.google.com/macros/s/AKfycbwhToh5HTIgKomxLeqAQ1LfnwOCU56ICby4B_5JMRf0bJ0JCEiJnZlwr92hZDZb8pBR/exec", {  // <-- Replace with your actual Web App URL
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      }).then(response => response.text()).then(result => {
-        console.log("Saved to Google Sheet:", result);
-        document.getElementById("successMessage").innerText = "Thank you! Your profile has been submitted successfully.";
-        // Clear form after submission
-        document.getElementById("name").value = "";
-        document.getElementById("phone").value = "";
-        document.getElementById("profession").value = "";
-        document.getElementById("debt").value = "";
-        document.getElementById("investments").value = "";
-        document.getElementById("share").value = "Yes";
-      }).catch(error => {
-        console.error("Error!", error.message);
-      });
+  fetch("YOUR_WEB_APP_URL", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" },
+  }).then(response => response.text()).then(result => {
+    console.log("Saved to Google Sheet:", result);
+    window.location.href = "thankyou.html";   // <-- Redirect to thankyou page
+  }).catch(error => {
+    console.error("Error!", error.message);
+  });
     }
   </script>
 </body>
