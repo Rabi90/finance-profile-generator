@@ -2,166 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Finance Profile Generator</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
+  <title>Finance Profile Form</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: url('https://images.unsplash.com/photo-1496307653780-42ee777d4833?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       margin: 0;
       padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-
     .container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      max-width: 500px;
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
       width: 100%;
-      animation: slideIn 0.8s ease forwards;
-    }
-
-    @keyframes slideIn {
-      0% {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    input, textarea, select, button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-
-    button {
-      background: linear-gradient(135deg, #28a745, #218838);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: linear-gradient(135deg, #218838, #1e7e34);
-    }
-
-    button:disabled {
-      background: #aaa;
-    }
-
-    h2 {
+      max-width: 400px;
       text-align: center;
-      color: #333;
-      margin-bottom: 20px;
     }
-
-    #thankYouSection img {
-      margin-bottom: 20px;
-      max-width: 100px;
+    .logo img {
+      max-width: 150px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin: 10px 0 20px;
+      color: #333;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    form button {
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    form button:hover {
+      background: #45a049;
+    }
+    .thank-you {
+      display: none;
+      color: green;
+      font-size: 18px;
+      margin-top: 20px;
     }
   </style>
 </head>
-
 <body>
 
   <div class="container">
-
-    <!-- FORM SECTION -->
-    <div id="formSection">
-      <h2>Finance Profile Generator</h2>
-      <form id="submit-form" name="submit-to-google-sheet">
-
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="text" name="phone" placeholder="Phone Number" required>
-        
-        <select name="profession" required>
-          <option value="" disabled selected>Select your Profession</option>
-          <option value="Job">Job</option>
-          <option value="Business">Business</option>
-          <option value="Self Employed">Self Employed</option>
-        </select>
-
-        <select name="debt" required>
-          <option value="" disabled selected>Debt Status</option>
-          <option value="Small Debt">Small Debt</option>
-          <option value="Big Debt">Big Debt</option>
-          <option value="No Debt">No Debt</option>
-        </select>
-
-        <textarea name="investments" placeholder="Preferred Investments (eg. Mutual Fund, Stocks, FD)" required></textarea>
-
-        <select name="share" required>
-          <option value="" disabled selected>Allow us to share this?</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-
-        <button type="submit" id="submitBtn">Submit <span id="spinner" style="display:none;">⏳</span></button>
-
-      </form>
+    <div class="logo">
+      <img src="https://i.ibb.co/3yjjpkwn/Smura.jpg" alt="Logo">
     </div>
 
-    <!-- THANK YOU SECTION -->
-    <div id="thankYouSection" style="display:none; text-align: center; margin-top: 50px;">
-      <img src="https://i.ibb.co/3yjjpkn/Smura.jpg" alt="Smura Logo" style="max-width: 120px; margin-bottom: 20px;">
-      <h2>Thank You!</h2>
-      <p>Your details have been submitted successfully.</p>
-      <button onclick="window.location.reload()">Submit Another Response</button>
-    </div>
+    <h2>Finance Profile Form</h2>
 
+    <form id="submit-form">
+      <input name="name" type="text" placeholder="Your Name" required>
+      <input name="phone" type="text" placeholder="Phone Number" required>
+      <input name="profession" type="text" placeholder="Profession (Job / Business / Self-employed)" required>
+      <input name="debt" type="text" placeholder="Debt Status (Small / Big / None)" required>
+      <input name="investments" type="text" placeholder="Preferred Investments (Assets)" required>
+      <input name="share" type="text" placeholder="Okay to share with followers?" required>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="thank-you" id="thankYouMessage">
+      <p>Thank you! Your response has been recorded.</p>
+    </div>
   </div>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwwTytBIsD8cuiA4pqDeadPkMLhPzXeyWLr4sMXWi-mHN8IeIau_ZOoa68gjbjJX5eM/exec'; 
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwwTytBIsD8cuiA4pqDeadPkMLhPzXeyWLr4sMXWi-mHN8IeIau_ZOoa68gjbjJX5eM/exec';
     const form = document.getElementById('submit-form');
-    const submitButton = document.getElementById('submitBtn');
-    const thankYouSection = document.getElementById('thankYouSection');
-    const formSection = document.getElementById('formSection');
-    const spinner = document.getElementById('spinner');
+    const thankYouMessage = document.getElementById('thankYouMessage');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      
-      submitButton.disabled = true;
-      spinner.style.display = 'inline-block';
 
-      const formData = new FormData(form);
-
-      fetch(scriptURL, { method: 'POST', body: formData })
-      .then(response => {
-        console.log('Success!', response);
-        formSection.style.display = 'none';
-        thankYouSection.style.display = 'block';
-        form.reset();
-      })
-      .catch(error => {
-        console.error('Error!', error.message);
-        alert('Something went wrong. Please try again.');
-      })
-      .finally(() => {
-        submitButton.disabled = false;
-        spinner.style.display = 'none';
-      });
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          console.log('Success!', response);
+          form.reset();
+          form.style.display = 'none';
+          thankYouMessage.style.display = 'block';
+        })
+        .catch(error => {
+          console.error('Error!', error.message);
+          alert('There was an error submitting the form. Please try again.');
+        });
     });
   </script>
 
