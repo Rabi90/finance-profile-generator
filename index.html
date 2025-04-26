@@ -1,146 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finance Profile Submission</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance Profile Generator</title>
   <style>
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
       padding: 20px;
     }
     .container {
-      max-width: 600px;
+      max-width: 500px;
       margin: auto;
       background: white;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #6a1b9a;
-    }
-    header p {
-      margin: 4px 0;
-      color: #333;
-    }
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: 600;
-      color: #333;
-    }
-    input, select {
+    input, textarea, select, button {
       width: 100%;
-      padding: 10px;
-      margin-top: 4px;
-      border-radius: 8px;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
     }
     button {
-      margin-top: 16px;
-      width: 100%;
-      background: #6a1b9a;
+      background-color: #4CAF50;
       color: white;
-      padding: 12px;
       font-size: 16px;
-      border: none;
-      border-radius: 8px;
       cursor: pointer;
     }
-    button:hover {
-      background: #4a148c;
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
     }
-    #successMessage {
-      margin-top: 20px;
+    h2 {
       text-align: center;
-      color: green;
-      font-weight: bold;
+      color: #333;
+    }
+    #thankYouSection img {
+      margin-bottom: 20px;
     }
   </style>
 </head>
+
 <body>
+
   <div class="container">
-    <header>
-      <h1>Your Brand Here</h1>
-      <p>Submit your profile details</p>
-    </header>
-    <label>Full Name:</label>
-    <input type="text" id="name" placeholder="Your name" required/>
-    <label>Phone Number:</label>
-    <input type="text" id="phone" placeholder="Your phone number" required/>
-    <label>1. What do you do for a living?</label>
-    <input type="text" id="profession" placeholder="Job / Business / Self-employed" required/>
-    <label>2. Do you have debt?</label>
-    <input type="text" id="debt" placeholder="Small / Big / No" required/>
-    <label>3. Do you invest? Which assets?</label>
-    <input type="text" id="investments" placeholder="Stocks, Mutual Funds, etc." required/>
-    <label>4. Can we share your story?</label>
-    <select id="share">
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
-    <button onclick="submitForm()">Submit</button>
-    <div id="successMessage"></div>
+
+    <!-- FORM SECTION -->
+    <div id="formSection">
+      <h2>Finance Profile Generator</h2>
+      <form name="submit-to-google-sheet">
+
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" name="phone" placeholder="Phone Number" required>
+        
+        <select name="profession" required>
+          <option value="" disabled selected>Select your Profession</option>
+          <option value="Job">Job</option>
+          <option value="Business">Business</option>
+          <option value="Self Employed">Self Employed</option>
+        </select>
+
+        <select name="debt" required>
+          <option value="" disabled selected>Debt Status</option>
+          <option value="Small Debt">Small Debt</option>
+          <option value="Big Debt">Big Debt</option>
+          <option value="No Debt">No Debt</option>
+        </select>
+
+        <textarea name="investments" placeholder="Preferred Investments (eg. Mutual Fund, Stocks, FD)" required></textarea>
+
+        <select name="share" required>
+          <option value="" disabled selected>Allow us to share this?</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <button type="submit" id="submitBtn">Submit <span id="spinner" style="display:none;">⏳</span></button>
+
+      </form>
+    </div>
+
+    <!-- THANK YOU SECTION -->
+    <div id="thankYouSection" style="display:none; text-align: center; margin-top: 50px;">
+      <img src="https://yourlogo.com/logo.png" alt="Logo" style="max-width: 120px;">
+      <h2>Thank You!</h2>
+      <p>Your details have been submitted successfully.</p>
+      <button onclick="window.location.reload()">Submit Another Response</button>
+    </div>
+
   </div>
 
   <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwhToh5HTIgKomxLeqAQ1LfnwOCU56ICby4B_5JMRf0bJ0JCEiJnZlwr92hZDZb8pBR/exec'; // Your actual script URL
-const form = document.forms['submit-to-google-sheet'];
-const submitButton = document.getElementById('submitBtn');
-const thankYouSection = document.getElementById('thankYouSection');
-const formSection = document.getElementById('formSection');
-const spinner = document.getElementById('spinner');
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwhToh5HTIgKomxLeqAQ1LfnwOCU56ICby4B_5JMRf0bJ0JCEiJnZlwr92hZDZb8pBR/exec'; // your Script URL
+    const form = document.forms['submit-to-google-sheet'];
+    const submitButton = document.getElementById('submitBtn');
+    const thankYouSection = document.getElementById('thankYouSection');
+    const formSection = document.getElementById('formSection');
+    const spinner = document.getElementById('spinner');
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  
-  submitButton.disabled = true;
-  spinner.style.display = 'inline-block'; // show spinner
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      submitButton.disabled = true;
+      spinner.style.display = 'inline-block';
 
-  const formData = {
-    name: form.name.value.trim(),
-    phone: form.phone.value.trim(),
-    profession: form.profession.value.trim(),
-    debt: form.debt.value.trim(),
-    investments: form.investments.value.trim(),
-    share: form.share.value.trim()
-  };
+      const formData = {
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        profession: form.profession.value.trim(),
+        debt: form.debt.value.trim(),
+        investments: form.investments.value.trim(),
+        share: form.share.value.trim()
+      };
 
-  fetch(scriptURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-  .then(response => response.json())
-  .then(response => {
-    console.log('Success!', response);
-    
-    // Show Thank You page
-    formSection.style.display = 'none';
-    thankYouSection.style.display = 'block';
-  })
-  .catch(error => {
-    console.error('Error!', error.message);
-    alert('Something went wrong. Please try again.');
-  })
-  .finally(() => {
-    submitButton.disabled = false;
-    spinner.style.display = 'none'; // hide spinner
-    form.reset();
-  });
-});
-</script>
+      fetch(scriptURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('Success!', response);
+        formSection.style.display = 'none';
+        thankYouSection.style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        alert('Something went wrong. Please try again.');
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+        spinner.style.display = 'none';
+        form.reset();
+      });
+    });
+  </script>
+
 </body>
 </html>
