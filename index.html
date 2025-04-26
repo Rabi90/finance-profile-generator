@@ -1,13 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finance Profile Generator</title>
+  <title>Finance Profile Submission</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
@@ -62,24 +60,11 @@
     button:hover {
       background: #4a148c;
     }
-    #photoPreview {
-      max-width: 100%;
-      border-radius: 12px;
-      margin-top: 10px;
-      display: block;
-    }
-    #outputCanvas {
-      display: none;
+    #successMessage {
       margin-top: 20px;
-      width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-    }
-    #downloadBtn {
-      display: none;
-      margin-top: 12px;
-      width: 100%;
-      background: #43a047;
+      text-align: center;
+      color: green;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -87,97 +72,55 @@
   <div class="container">
     <header>
       <h1>Your Brand Here</h1>
-      <p>Create your financial profile in a snap!</p>
+      <p>Submit your profile details</p>
     </header>
     <label>Full Name:</label>
-    <input type="text" id="name" placeholder="Your name" />
+    <input type="text" id="name" placeholder="Your name" required/>
     <label>Phone Number:</label>
-    <input type="text" id="phone" placeholder="Your phone number" />
-    <label>Upload your photo:</label>
-    <input type="file" id="photo" accept="image/*" onchange="previewPhoto()" />
-    <img id="photoPreview" src="" alt="Photo Preview" />
+    <input type="text" id="phone" placeholder="Your phone number" required/>
     <label>1. What do you do for a living?</label>
-    <input type="text" id="profession" placeholder="E.g., Job / Business / Self-Employed" />
+    <input type="text" id="profession" placeholder="Job / Business / Self-employed" required/>
     <label>2. Do you have debt?</label>
-    <input type="text" id="debt" placeholder="E.g., Small, Big, None" />
+    <input type="text" id="debt" placeholder="Small / Big / No" required/>
     <label>3. Do you invest? Which assets?</label>
-    <input type="text" id="investments" placeholder="E.g., Mutual Funds, Real Estate, Stocks" />
+    <input type="text" id="investments" placeholder="Stocks, Mutual Funds, etc." required/>
     <label>4. Can we share your story?</label>
     <select id="share">
       <option value="Yes">Yes</option>
       <option value="No">No</option>
     </select>
-    <button onclick="submitAndGenerate()">Generate WhatsApp-Ready Image</button>
-    <canvas id="outputCanvas"></canvas>
-    <button id="downloadBtn" onclick="downloadImage()">Download Image</button>
+    <button onclick="submitForm()">Submit</button>
+    <div id="successMessage"></div>
   </div>
 
   <script>
-    let imageDataURL = "";
-    function previewPhoto() {
-      const file = document.getElementById('photo').files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        document.getElementById('photoPreview').src = reader.result;
-        imageDataURL = reader.result;
-      };
-      if (file) reader.readAsDataURL(file);
-    }
-
-    function submitAndGenerate() {
+    function submitForm() {
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
       const profession = document.getElementById("profession").value;
       const debt = document.getElementById("debt").value;
       const investments = document.getElementById("investments").value;
       const share = document.getElementById("share").value;
+
       const data = { name, phone, profession, debt, investments, share };
 
-      fetch("WebURL", {
+      fetch("https://script.google.com/macros/s/AKfycbznpYp2i2UrFXeja2_fG5FwfUkJnF0fPChUoQLG2sCChiQJeWLMXM99kBZ6CuSGfQff/exec", {  // <-- Replace with your actual Web App URL
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       }).then(response => response.text()).then(result => {
         console.log("Saved to Google Sheet:", result);
-        generateImage(name, profession, debt, investments, share);
-      }).catch(error => console.error("Error:", error));
-    }
-
-    function generateImage(name, profession, debt, investments, share) {
-      const canvas = document.getElementById("outputCanvas");
-      const ctx = canvas.getContext("2d");
-      const img = new Image();
-
-      img.onload = function () {
-        canvas.width = 600;
-        canvas.height = 400;
-        ctx.fillStyle = "#f3e5f5";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 20, 20, 160, 160);
-        ctx.fillStyle = "#4a148c";
-        ctx.font = "16px Poppins";
-        const lines = [
-          `Name: ${name}`,
-          `Profession: ${profession}`,
-          `Debt: ${debt}`,
-          `Investments: ${investments}`,
-          share === "Yes" ? "Happy to share this story!" : "Private profile"
-        ];
-        lines.forEach((line, i) => {
-          ctx.fillText(line, 200, 60 + (i * 30));
-        });
-        canvas.style.display = "block";
-        document.getElementById("downloadBtn").style.display = "block";
-      };
-      img.src = imageDataURL;
-    }
-
-    function downloadImage() {
-      const canvas = document.getElementById("outputCanvas");
-      const link = document.createElement('a');
-      link.download = 'finance_profile.png';
-      link.href = canvas.toDataURL();
-      link.click();
+        document.getElementById("successMessage").innerText = "Thank you! Your profile has been submitted successfully.";
+        // Clear form after submission
+        document.getElementById("name").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("profession").value = "";
+        document.getElementById("debt").value = "";
+        document.getElementById("investments").value = "";
+        document.getElementById("share").value = "Yes";
+      }).catch(error => {
+        console.error("Error!", error.message);
+      });
     }
   </script>
 </body>
